@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AuthorController;
 
 
 Route::get('/', function () {
@@ -27,4 +28,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('author', \App\Http\Controllers\AuthorController::class);
 });

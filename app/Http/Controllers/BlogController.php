@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\author;
 use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
@@ -18,7 +19,8 @@ class BlogController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('blog.create', compact('categories'));
+        $author = author::all();
+        return view('blog.create', compact('categories' ,'author'));
     }
 
     public function store(Request $request)
@@ -28,6 +30,7 @@ class BlogController extends Controller
             'content' => 'required',
             'slug' => 'required',
             'category_id' => 'required|exists:categories,id',
+            'author_id' => 'required|exists:author,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -47,6 +50,7 @@ class BlogController extends Controller
             'slug' => $request->slug,
             'image' => $imagePath,
             'category_id' => $request->category_id, // save the selected category
+            'author_id' => $request->author_id, // save the selected category
         ]);
 
         return redirect('/blogs')->with('success', 'Post created successfully!');
