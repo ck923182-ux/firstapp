@@ -64,23 +64,28 @@ class BlogController extends Controller
 
     public function edit(Blog $blog)
     {
-        $categories = \App\Models\Category::all();
-        return view('blog.edit', compact('blog', 'categories'));
+        $categories = Category::all();
+        $author = author::all();
+        return view('blog.edit', compact('blog', 'categories' ,'author'));
     }
 
 
     public function update(Request $request, Blog $blog)
     {
+
+        // dd($request);
         $request->validate([
             'title' => 'required|string',
             'slug' => 'required|string',
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'author_id' => 'required|exists:author,id',
         ]);
 
         $blog->title = $request->title;
         $blog->slug = $request->slug;
         $blog->content = $request->content;
+        $blog->author_id = $request->author_id;
 
         if ($request->hasFile('image')) {
             // Optionally delete old image

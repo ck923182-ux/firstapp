@@ -13,6 +13,7 @@
 
     </div>
 @endif
+{{-- {{$author}} --}}
 <form action="{{ route('author.update' ,$author) }}"method="POST">
     @csrf
     @method("PUT")

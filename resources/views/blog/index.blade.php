@@ -1,7 +1,7 @@
 <a href="{{ route('blogs.create') }}">Add New Post</a>
 @foreach ($blog as $post)
     <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
-        <strong class="text-xl font-semibold">{{ $post->title }}</strong>
+        <p>Post Title <strong class="text-xl font-semibold">{{ $post->title }}</strong></p>
         <p>Post Content <strong>{{ $post->content }}</strong> </p>
         <p> Post Slug : <strong> {{ $post->slug }} </strong></p>
         <p>category : <strong>{{ $post->category ? $post->category->name : 'No Category' }}</strong> </p>
