@@ -10,17 +10,30 @@ use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $blog = Blog::all();
-        return view('blog.index', compact('blog'));
+
+        $query = Blog::query();
+
+        // If search keyword exists
+        if ($request->has('search') && $request->search != '') {
+            $query->where('title', 'like', '%' . $request->search . '%')
+                ->orWhere('content', 'like', '%' . $request->search . '%')
+                ->orWhere('slug', 'like', '%' . $request->search . '%');
+        }
+
+        // $blog = Blog::all();
+        // $blogs = Blog::with('category')->paginate(2);
+        $blogs = $query->paginate(30);
+
+        return view('blog.index', compact('blogs'));
     }
 
     public function create()
     {
         $categories = Category::all();
         $author = author::all();
-        return view('blog.create', compact('categories' ,'author'));
+        return view('blog.create', compact('categories', 'author'));
     }
 
     public function store(Request $request)
@@ -66,7 +79,7 @@ class BlogController extends Controller
     {
         $categories = Category::all();
         $author = author::all();
-        return view('blog.edit', compact('blog', 'categories' ,'author'));
+        return view('blog.edit', compact('blog', 'categories', 'author'));
     }
 
 
