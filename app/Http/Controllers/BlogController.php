@@ -12,22 +12,22 @@ class BlogController extends Controller
 {
     public function index(Request $request)
     {
-
-        $query = Blog::query();
+        $query = Blog::with('category');
 
         // If search keyword exists
-        if ($request->has('search') && $request->search != '') {
-            $query->where('title', 'like', '%' . $request->search . '%')
-                ->orWhere('content', 'like', '%' . $request->search . '%')
-                ->orWhere('slug', 'like', '%' . $request->search . '%');
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                    ->orWhere('content', 'like', '%' . $request->search . '%')
+                    ->orWhere('slug', 'like', '%' . $request->search . '%');
+            });
         }
 
-        // $blog = Blog::all();
-        // $blogs = Blog::with('category')->paginate(2);
-        $blogs = $query->paginate(30);
+        $blogs = $query->paginate(2)->appends(['search' => $request->search]);
 
         return view('blog.index', compact('blogs'));
     }
+
 
     public function create()
     {
