@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BlogController;
 
 
 Route::get('/', function () {
@@ -22,9 +23,13 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::middleware(['auth'])->group(function () {
-    Route::resource('blogs', \App\Http\Controllers\BlogController::class);
+// Route::middleware(['auth'])->group(function () {
+//     Route::resource('blogs', \App\Http\Controllers\BlogController::class);
+// });
+Route::middleware(['auth', 'can:manage-blogs'])->group(function () {
+    Route::resource('blogs', BlogController::class);
 });
+
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('categories', \App\Http\Controllers\CategoryController::class);
