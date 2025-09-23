@@ -1,4 +1,10 @@
-<a href="{{ route('blogs.create') }}">Add New Post</a>
+
+{{-- @extends('layouts.navigation') --}}
+@extends('layouts.app')
+@section('content')
+@can('create-blogs')
+    <h1><a href="{{ route('blogs.create') }}">Add Blog</a></h1>
+@endcan
 
 <form method="GET" action="{{ route('blogs.index') }}">
     <input type="text" name="search" value="{{ request('search') }}" placeholder="Search blogs...">
@@ -38,4 +44,4 @@
 <div class="text-4xl text-red-500 font-bold text-center mt-10">
     Tailwind is working!
 </div>
-    
+@endsection
