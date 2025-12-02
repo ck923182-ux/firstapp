@@ -45,7 +45,7 @@ GitHub Link: [Add your link]
 ## How to Reach Me
 
 * GitHub: https://github.com/ck923182-ux
-* LinkedIn: [Add your link]
+* LinkedIn: https://www.linkedin.com/in/chandan-kumar-ba054138a/
 * Email: ck923182@gmail.com
 
 Thanks for visiting my profile.
