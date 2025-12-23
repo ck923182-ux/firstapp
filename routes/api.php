@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\Billing\BillingAccountController;
+use App\Http\Controllers\Api\ImageController;
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -15,6 +16,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 });
 
+Route::post('/upload-image', [ImageController::class, 'upload']);
 
 
 ?>
