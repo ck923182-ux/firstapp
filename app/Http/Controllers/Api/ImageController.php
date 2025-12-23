@@ -4,15 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\ImageUploadRequest;
 
 class ImageController extends Controller
 {
-    public function upload(Request $request)
+    public function upload(ImageUploadRequest  $request)
     {
-        // 1. Validate the file
-        $request->validate([
-            'image' => 'required|image|max:2048', // 2MB limit
-        ]);
+        
 
         // 2. Store the file in public storage
         $path = $request->file('image')->store('uploads', 'public');
