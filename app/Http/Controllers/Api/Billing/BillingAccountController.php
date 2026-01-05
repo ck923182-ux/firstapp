@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Billing;
 
+use App\Http\Resources\BillingAccountResource;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BillingAccount;
@@ -11,7 +13,13 @@ class BillingAccountController extends Controller
     // GET /api/billing-accounts
     public function index()
     {
-        return response()->json(BillingAccount::all());
+        // return response()->json(BillingAccount::all());
+        // return BillingAccountResource::collection(
+        //     BillingAccount::paginate(10)
+        // );
+        return BillingAccountResource::collection(
+        BillingAccount::with('user')->paginate(10)
+    );
     }
 
     // GET /api/billing-accounts/{id}
