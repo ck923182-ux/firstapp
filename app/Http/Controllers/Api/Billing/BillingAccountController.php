@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Billing;
 
 use App\Http\Resources\BillingAccountResource;
+use App\Helpers\ApiResponse;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,21 +18,37 @@ class BillingAccountController extends Controller
         // return BillingAccountResource::collection(
         //     BillingAccount::paginate(10)
         // );
-        return BillingAccountResource::collection(
-        BillingAccount::with('user')->paginate(10)
-    );
+        // return BillingAccountResource::collection(
+        //     BillingAccount::with('user')->paginate(10)
+        // );
+        $accounts = BillingAccount::with('user')->paginate(10);
+
+        return ApiResponse::success(
+            BillingAccountResource::collection($accounts),
+            'Billing accounts list'
+        );
     }
 
     // GET /api/billing-accounts/{id}
     public function show($id)
     {
-        $account = BillingAccount::find($id);
-        if (!$account) {
-            return response()->json(['message' => 'Account not found'], 404);
-        }
-        return response()->json($account);
-    }
+        // $account = BillingAccount::find($id);
+        // if (!$account) {
+        //     return response()->json(['message' => 'Account not found'], 404);
+        // }
+        // return response()->json($account); 
 
+        // $account = BillingAccount::with('user')->findOrFail($id);
+        // return new BillingAccountResource($account);
+        // API wrapp 
+        $account = BillingAccount::with('user')->findOrFail($id);
+
+        return ApiResponse::success(
+            new BillingAccountResource($account),
+            'Billing account fetched successfully'
+        );
+    }
+   
     // POST /api/billing-accounts
     public function store(Request $request)
     {

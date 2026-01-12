@@ -16,7 +16,7 @@ class BillingAccountResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->account_name ,
             'email' => $this->email,
 
             // 🔹 Computed field
@@ -28,17 +28,25 @@ class BillingAccountResource extends JsonResource
             'created_human' => $this->created_at->diffForHumans(),
 
             // 🔹 Relationship
-            'user' => [
-                'id' => optional($this->user)->id,
-                'name' => optional($this->user)->name,
-                'email' => optional($this->user)->email,
-            ],
-             // Why optional() Is Important
+            // 'user' => [
+            //     'id' => optional($this->user)->id,
+            //     'name' => optional($this->user)->name,
+            //     'email' => optional($this->user)->email,
+            // ],
+            // Why optional() Is Important
             // Without it:
             // API crashes if user_id is null
             // With it:
             // Safe response
             // No errors
+            'user' => $this->whenLoaded('user', function () {
+                return [
+                    'id' => $this->user->id,
+                    'name' => $this->user->name,
+                    'email' => $this->user->email,
+                ];
+            }),
+            // in out put ship the user data object 
 
         ];
     }

@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\ImageController;
 // Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/billing-accounts', [BillingAccountController::class, 'index']);
+    Route::get('/billing-accounts/{id}', [BillingAccountController::class, 'show']); // ✅ REQUIRED
+
     Route::post('/billing-accounts', [BillingAccountController::class, 'store']);
     Route::put('/billing-accounts/{id}', [BillingAccountController::class, 'update']);
     Route::delete('/billing-accounts/{id}', [BillingAccountController::class, 'destroy']);
