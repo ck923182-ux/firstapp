@@ -12,4 +12,9 @@ class BillingAccount extends Model
         'phone',
         'balance',
     ];
+    // App\Models\BillingAccount.php
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
