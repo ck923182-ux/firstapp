@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\QueueTestController;
 
 
 Route::get('/', function () {
@@ -37,3 +38,4 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('author', \App\Http\Controllers\AuthorController::class);
 });
+Route::get('/queue-test', [QueueTestController::class, 'test']);
