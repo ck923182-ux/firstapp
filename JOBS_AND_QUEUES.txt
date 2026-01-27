@@ -1,0 +1,136 @@
+Laravel Jobs & Queues – Step by Step Guide
+
+1) What is a Job?
+A Job is a class that handles a specific task in the background.
+Examples:
+- Sending emails
+- Processing files
+- Making API calls
+
+--------------------------------------------------
+
+2) What is a Queue?
+A Queue allows jobs to be processed later instead of immediately.
+This improves application performance and user experience.
+
+--------------------------------------------------
+
+3) Create a Job
+
+Command:
+php artisan make:job SendEmailJob
+
+This command creates:
+app/Jobs/SendEmailJob.php
+
+--------------------------------------------------
+
+4) Job Class Explanation
+
+File:
+app/Jobs/SendEmailJob.php
+
+Key points:
+- Implements ShouldQueue interface
+- Uses the following traits:
+  - Dispatchable
+  - InteractsWithQueue
+  - Queueable
+  - SerializesModels
+
+Methods:
+- __construct() → receives required data
+- handle() → contains the logic that runs in the background
+
+implements ShouldQueue:
+Tells Laravel to push this job to the queue instead of running immediately.
+
+--------------------------------------------------
+
+5) Dispatch the Job (Controller)
+
+Create a controller:
+php artisan make:controller QueueTestController
+
+Controller example:
+use App\Jobs\SendWelcomeEmailJob;
+
+public function test()
+{
+    SendWelcomeEmailJob::dispatch();
+    return "Job Dispatched Successfully";
+}
+
+Add route:
+Route::get('/queue-test', [QueueTestController::class, 'test']);
+
+Run queue worker:
+php artisan queue:work
+
+Visit in browser:
+http://localhost:8000/queue-test
+
+Check log file:
+storage/logs/laravel.log
+
+Expected message:
+Queue Job Executed Successfully
+
+This confirms:
+- Job is dispatched
+- Job is stored in database
+- Worker executes the job
+
+--------------------------------------------------
+
+6) Queue Connection Setup
+
+In .env file:
+QUEUE_CONNECTION=database
+
+--------------------------------------------------
+
+7) Create Queue Table
+
+Commands:
+php artisan queue:table
+php artisan migrate
+
+This creates the "jobs" table in the database.
+
+--------------------------------------------------
+
+8) Run the Queue Worker
+
+Command:
+php artisan queue:work
+
+This processes queued jobs.
+
+--------------------------------------------------
+
+9) Important Queue Commands
+
+php artisan queue:work
+php artisan queue:restart
+php artisan queue:failed
+php artisan queue:retry all
+
+--------------------------------------------------
+
+10) Notes
+
+- Jobs run in the background
+- Improves application performance
+- Best for heavy tasks
+- Queue worker must be running
+
+--------------------------------------------------
+
+Bonus Tips:
+- Implement real email sending inside a Job
+- Add more job functionality in future updates
+
+--------------------------------------------------
+
+End of File
