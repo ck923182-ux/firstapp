@@ -134,3 +134,23 @@ Bonus Tips:
 --------------------------------------------------
 
 End of File
+
+Date 2 FEB 2026
+
+Implement Delay Job Execution
+
+Added code in our Controller file in my case  i am updated my QueueTestController 
+added at the top of file 
+use Illuminate\Support\Carbon;
+
+SendWelcomeEmail::dispatch($user->email, $user->name);
+to 
+SendWelcomeEmail::dispatch($user->email, $user->name)->delay(Carbon::now()->addMinute(2));
+SendWelcomeEmail::dispatch(...)
+    ->delay(Carbon::now()->addMinutes(2));
+this behavior
+Job is placed into queue with a future timestamp
+Worker does NOT execute it now
+Worker waits until timestamp is reached
+After 2 minutes → Job starts
+Email is sent

@@ -58,7 +58,7 @@ class SendWelcomeEmail implements ShouldQueue
         // Log::info("Welcome user Name: " . $this->name);
         // Log::info("Welcome user Email: " . $this->email);
          Mail::to('test@mailtrap.io')
-        ->send(new WelcomeMail($this->name));
+        ->send(new WelcomeMail($this->email));
 
     }
 }
