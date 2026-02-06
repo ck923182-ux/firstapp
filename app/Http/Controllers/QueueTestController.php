@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendWelcomeEmail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
+
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -15,10 +17,10 @@ class QueueTestController extends Controller
     {
         $user = User::create([
             'name' => "har",
-            'email'=> "har@gmail.com",
+            'email'=> "eresarlll@gmail.com",
             'password' => Hash::make('har')
         ]);
         SendWelcomeEmail::dispatch($user->email, $user->name);
-        return "Job Dispatched With data";
+        return "Job Dispatched With Minutes dealy data";
     }
 }
