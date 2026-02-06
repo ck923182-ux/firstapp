@@ -36,6 +36,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
+
 
 class SendWelcomeEmail implements ShouldQueue
 {
@@ -59,6 +61,9 @@ class SendWelcomeEmail implements ShouldQueue
         // Log::info("Welcome user Email: " . $this->email);
          Mail::to('test@mailtrap.io')
         ->send(new WelcomeMail($this->email));
-
+        throw new \Exception("Testing failed job");
+//         if(User::where('email',$this->email)->exists()){
+//        throw new \Exception("User already exists");
+//    }
     }
 }

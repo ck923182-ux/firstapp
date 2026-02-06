@@ -17,10 +17,10 @@ class QueueTestController extends Controller
     {
         $user = User::create([
             'name' => "har",
-            'email'=> "priyanka122@gmail.com",
+            'email'=> "eresarlll@gmail.com",
             'password' => Hash::make('har')
         ]);
-        SendWelcomeEmail::dispatch($user->email, $user->name)->delay(Carbon::now()->addMinute(2));
-        return "Job Dispatched With 2 Minutes dealy data";
+        SendWelcomeEmail::dispatch($user->email, $user->name);
+        return "Job Dispatched With Minutes dealy data";
     }
 }

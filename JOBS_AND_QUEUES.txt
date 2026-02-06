@@ -154,3 +154,33 @@ Worker does NOT execute it now
 Worker waits until timestamp is reached
 After 2 minutes → Job starts
 Email is sent
+
+Next topic
+What is a Failed Job?
+A job is marked as failed when:
+Email server down
+Wrong credentials
+Exception thrown
+Timeout
+
+Step 1: Ensure failed_jobs Table Exists
+php artisan migrate
+if Not 
+php artisan queue:failed-table
+php artisan migrate
+Step 2: Force a Job Failure (For Learning)
+app/Jobs/SendWelcomeEmail.php
+in handle()
+throw new \Exception("Testing failed job");
+for example 
+public function handle(): void
+{
+    throw new \Exception("Testing failed job");
+}
+Step 3: Restart Worker
+CTRL + C
+php artisan queue:work
+Step 4: Dispatch Job
+/queue-test
+Step 5: See Failure
+php artisan queue:failed
